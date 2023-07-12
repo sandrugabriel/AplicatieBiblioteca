@@ -71,6 +71,47 @@ namespace AplicatieBiblioteca.Controllers
             return null;
         }
 
+        public Utilizator getClientById(int id)
+        {
+
+            for (int i = 0; i < utilizatori.Count; i++)
+            {
+                if (utilizatori[i].Id == id)
+                {
+                    return utilizatori[i];
+                }
+            }
+
+            return null;
+        }
+
+        public int generareId()
+        {
+            Random random = new Random();
+
+            int id = random.Next();
+            while (this.getClientById(id) != null)
+            {
+
+                id = random.Next();
+
+            }
+
+
+            return id;
+
+        }
+
+        public void save(string textul)
+        {
+
+            string text = textul;
+            string path = Application.StartupPath + @"/data/utilizatori.txt";
+            File.AppendAllText(path, text + "\n");
+
+
+        }
+
 
     }
 }
