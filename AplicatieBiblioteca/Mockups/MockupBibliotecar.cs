@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AplicatieBiblioteca.Mockups
 {
-    public partial class MockupLogare : Form
+    public partial class MockupBibliotecar : Form
     {
-        public MockupLogare()
+        public MockupBibliotecar()
         {
             InitializeComponent();
         }
