@@ -72,9 +72,8 @@ namespace AplicatieBiblioteca.Panels
             this.btnStart.Location = new System.Drawing.Point(165, 368);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(171, 54);
-            this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new EventHandler(btnStart_Click);
              
             // txtDesc
             this.txtDesc.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -89,6 +88,13 @@ namespace AplicatieBiblioteca.Panels
 
         }
 
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+
+            this.form.removePnl("PnlStart");
+            this.form.Controls.Add(new PnlLogare(form));
+        }
 
 
     }

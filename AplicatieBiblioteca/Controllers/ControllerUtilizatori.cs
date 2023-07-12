@@ -39,6 +39,37 @@ namespace AplicatieBiblioteca.Controllers
             streamReader.Close();   
         }
 
+        public bool verificare(string email, string parola)
+        {
+
+            for(int i=0;i<utilizatori.Count;i++)
+            {
+
+                if (email.Equals(utilizatori[i].Email) && parola.Equals(utilizatori[i].Parola))
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        public Utilizator getUtilizator(string email, string parola)
+        {
+
+            for (int i = 0; i < utilizatori.Count; i++)
+            {
+
+                if (email.Equals(utilizatori[i].Email) && parola.Equals(utilizatori[i].Parola))
+                {
+                    return utilizatori[i];
+                }
+
+            }
+
+            return null;
+        }
 
 
     }

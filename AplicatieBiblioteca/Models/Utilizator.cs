@@ -36,7 +36,6 @@ namespace AplicatieBiblioteca.Models
             this.tip = int.Parse(prop[1]);
             this.nume = prop[2];
             this.email = prop[3];
-            if(tip == 1)
             this.parola = prop[4];
 
         }
