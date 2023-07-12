@@ -176,7 +176,8 @@ namespace AplicatieBiblioteca.Panels
 
                     Utilizator utilizator = controllerUtilizatori.getUtilizator(txtEmail.Text,txtParola.Text);
                     this.form.removePnl("Pnllogare");
-                   
+                    if (utilizator.Tip == 1) this.form.Controls.Add(new PnlBibliotecar(form, utilizator));
+                    
 
                 }
                 else
