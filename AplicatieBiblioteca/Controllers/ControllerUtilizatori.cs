@@ -150,12 +150,22 @@ namespace AplicatieBiblioteca.Controllers
             {
                string nume = utilizatori[i].Nume;
                 nume = nume.ToLower();
-              //  MessageBox.Show(nume);
-                string[] prop = nume.Split(' ');
-                for(int k = 0; k < prop.Length; k++)
+                //  MessageBox.Show(nume);
+                string[] p = fil.Split(' ');
+               // MessageBox.Show(p.Length.ToString());
+                if (p.Length == 1)
                 {
-                    if (prop[k].Equals(fil)) list.Add(utilizatori[i]);
+                    string[] prop = nume.Split(' ');
+                    for (int k = 0; k < prop.Length; k++)
+                    {
+                        if (prop[k].Equals(fil)) list.Add(utilizatori[i]);
+                    }
                 }
+                else
+                {
+                    if (utilizatori[i].Nume.ToLower().Equals(fil)) list.Add(utilizatori[i]);
+                }
+               
 
             }
 

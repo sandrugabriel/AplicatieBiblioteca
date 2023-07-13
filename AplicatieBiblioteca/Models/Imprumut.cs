@@ -67,6 +67,9 @@ namespace AplicatieBiblioteca.Models
             set { dataRestituire = value; }
         }
 
-
+        public string toSave()
+        {
+            return Id.ToString() + ";" + IdUtilizator.ToString() + ";" + IdCarte.ToString() + ";" + DataStart.ToString() + ";" + DataRestituire.ToString();
+        }
     }
 }

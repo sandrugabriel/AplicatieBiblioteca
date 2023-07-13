@@ -39,6 +39,28 @@ namespace AplicatieBiblioteca.Controllers
             streamReader.Close();
         }
 
+        public Carte findbyId(int id)
+        {
+
+            for (int i = 0; i < carti.Count; i++)
+            {
+
+                if (id == carti[i].Id)
+                {
+                    return carti[i];
+                }
+
+            }
+
+            return null;
+
+        }
+
+        public List<Carte> getCartii()
+        {
+            return carti;
+        }
+
 
     }
 }
