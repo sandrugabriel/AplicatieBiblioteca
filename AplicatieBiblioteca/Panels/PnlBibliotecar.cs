@@ -447,6 +447,7 @@ namespace AplicatieBiblioteca.Panels
             this.dataGridViewCarteImp.RowTemplate.Height = 24;
             this.dataGridViewCarteImp.Size = new System.Drawing.Size(1245, 241);
             this.dataGridViewCarteImp.CellContentClick += new DataGridViewCellEventHandler(dataGridViewCarteImp_CellContentClick);
+            this.dataGridViewCarteImp.CellDoubleClick += new DataGridViewCellEventHandler(dataGridViewCarteImp_CellDoubleClick);
 
             // tabControl2
             this.tabControl2.Controls.Add(this.tabImprumutate);
@@ -930,7 +931,22 @@ namespace AplicatieBiblioteca.Panels
             }
         }
 
+        private void dataGridViewCarteImp_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+
+                DataGridViewRow row = dataGridViewCarteImp.Rows[e.RowIndex];
+                int id = int.Parse(row.Cells["cmbImpId"].Value.ToString());
+                //MessageBox.Show("Ai făcut dublu-clic pe linia " + e.RowIndex.ToString());
+                Carte carte = controllerCarti.findbyId(id);
+                this.form.removePnl("PnlBibliotecar");
+                this.form.Controls.Add(new PnlPrevizualizareCarte(carte, form, utilizator));
+            }
+
+
+        }
 
     }
 }
