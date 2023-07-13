@@ -69,5 +69,9 @@ namespace AplicatieBiblioteca.Models
             set { startus = value; }
         }
 
+        public string toSave()
+        {
+            return Id.ToString() + ";"+ IdCititor.ToString() + ";" + IdCarte.ToString() + ";" + DataRezervari.ToString() + ";" + Status.ToString();
+        }
     }
 }
