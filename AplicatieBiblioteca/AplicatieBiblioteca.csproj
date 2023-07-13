@@ -62,6 +62,12 @@
     <Compile Include="Mockups\MockupBibliotecar.Designer.cs">
       <DependentUpon>MockupBibliotecar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mockups\MockupPrevizualizareCarte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mockups\MockupPrevizualizareCarte.Designer.cs">
+      <DependentUpon>MockupPrevizualizareCarte.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Carte.cs" />
     <Compile Include="Models\Imprumut.cs" />
     <Compile Include="Models\Rezervare.cs" />
@@ -70,6 +76,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Panels\PnlLogare.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Panels\PnlPrevizualizareCarte.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Panels\PnlStart.cs">
@@ -82,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Mockups\MockupBibliotecar.resx">
       <DependentUpon>MockupBibliotecar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mockups\MockupPrevizualizareCarte.resx">
+      <DependentUpon>MockupPrevizualizareCarte.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
