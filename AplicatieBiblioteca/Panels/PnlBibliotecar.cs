@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,6 +42,18 @@ namespace AplicatieBiblioteca.Panels
 
         private List<string> erori;
 
+
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.Button btnFiltreaza;
+        private System.Windows.Forms.TextBox txtNume;
+        private System.Windows.Forms.Label lblNumelePrenume;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cmbId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cmbNume;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cmbEmail;
+        private System.Windows.Forms.DataGridViewButtonColumn cmbAfisaza;
+
+        private List<Utilizator> cititorii;
+
         public PnlBibliotecar(Form1 form1, Utilizator utilizator1)
         {
             this.form = form1;
@@ -51,6 +64,7 @@ namespace AplicatieBiblioteca.Panels
             this.form.Location = new Point(0, 0);
             this.form.WindowState = FormWindowState.Maximized;
             this.erori = new List<string>();
+            this.cititorii = new List<Utilizator>();
             this.controllerUtilizatori = new ControllerUtilizatori();
 
             //PnlBibliotecar
@@ -76,6 +90,14 @@ namespace AplicatieBiblioteca.Panels
             this.radioCititor = new System.Windows.Forms.RadioButton();
             this.btnInregistarare = new System.Windows.Forms.Button();
             this.btnRenuntare = new System.Windows.Forms.Button();
+            this.btnFiltreaza = new System.Windows.Forms.Button();
+            this.txtNume = new System.Windows.Forms.TextBox();
+            this.lblNumelePrenume = new System.Windows.Forms.Label();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.cmbId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbNume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbAfisaza = new System.Windows.Forms.DataGridViewButtonColumn();
 
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblNume);
@@ -90,26 +112,22 @@ namespace AplicatieBiblioteca.Panels
             this.pctPoza.SizeMode = PictureBoxSizeMode.StretchImage;
 
             // lblData
-            // 
             this.lblData.AutoSize = true;
             this.lblData.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 15F);
             this.lblData.Location = new System.Drawing.Point(1000, 35);
             this.lblData.Name = "lblData";
             this.lblData.Size = new System.Drawing.Size(66, 32);
             this.lblData.Text = "Data: " + DateTime.Now;
-             
+
             // lblNume
-            // 
             this.lblNume.AutoSize = true;
             this.lblNume.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 18F);
             this.lblNume.Location = new System.Drawing.Point(221, 61);
             this.lblNume.Name = "lblNume";
             this.lblNume.Size = new System.Drawing.Size(198, 39);
-            this.lblNume.TabIndex = 9;
             this.lblNume.Text = "Bibilotecar = " + utilizator.Nume;
-             
+
             // tabControl1
-            // 
             this.tabControl1.Controls.Add(this.tabInregistrare);
             this.tabControl1.Controls.Add(this.tabAfisare);
             this.tabControl1.Controls.Add(this.tabCititor);
@@ -118,7 +136,6 @@ namespace AplicatieBiblioteca.Panels
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1352, 709);
-            this.tabControl1.TabIndex = 10;
 
             // tabInregistrare
             this.tabInregistrare.Controls.Add(this.btnRenuntare);
@@ -137,133 +154,168 @@ namespace AplicatieBiblioteca.Panels
             this.tabInregistrare.Name = "tabInregistrare";
             this.tabInregistrare.Padding = new System.Windows.Forms.Padding(3);
             this.tabInregistrare.Size = new System.Drawing.Size(1344, 669);
-            this.tabInregistrare.TabIndex = 0;
             this.tabInregistrare.Text = "Inregistrare";
-            this.tabInregistrare.UseVisualStyleBackColor = true;
-             
+
             // tabAfisare
-            // 
+            this.tabAfisare.Controls.Add(this.btnFiltreaza);
+            this.tabAfisare.Controls.Add(this.txtNume);
+            this.tabAfisare.Controls.Add(this.lblNumelePrenume);
+            this.tabAfisare.Controls.Add(this.dataGridView);
             this.tabAfisare.Location = new System.Drawing.Point(4, 36);
             this.tabAfisare.Name = "tabAfisare";
             this.tabAfisare.Padding = new System.Windows.Forms.Padding(3);
             this.tabAfisare.Size = new System.Drawing.Size(1344, 669);
-            this.tabAfisare.TabIndex = 1;
             this.tabAfisare.Text = "AfisareCititor ";
-            this.tabAfisare.UseVisualStyleBackColor = true;
-            // 
+
             // tabCititor
-            // 
             this.tabCititor.Location = new System.Drawing.Point(4, 25);
             this.tabCititor.Name = "tabCititor";
             this.tabCititor.Size = new System.Drawing.Size(1344, 680);
-            this.tabCititor.TabIndex = 2;
             this.tabCititor.Text = "Cititor";
-            this.tabCititor.UseVisualStyleBackColor = true;
 
             // lblNumele
-            // 
             this.lblNumele.AutoSize = true;
             this.lblNumele.Location = new System.Drawing.Point(72, 52);
             this.lblNumele.Name = "lblNumele";
             this.lblNumele.Size = new System.Drawing.Size(175, 27);
-            this.lblNumele.TabIndex = 0;
             this.lblNumele.Text = "Nume si prenume";
-            // 
+
             // txtNumele
-            // 
             this.txtNumele.Location = new System.Drawing.Point(77, 93);
             this.txtNumele.Name = "txtNumele";
             this.txtNumele.Size = new System.Drawing.Size(294, 34);
-            this.txtNumele.TabIndex = 1;
-            // 
+
             // txtEmail
-            // 
             this.txtEmail.Location = new System.Drawing.Point(459, 93);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(294, 34);
-            this.txtEmail.TabIndex = 3;
-            // 
+
             // lblEmail
-            // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Location = new System.Drawing.Point(454, 52);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(60, 27);
-            this.lblEmail.TabIndex = 2;
             this.lblEmail.Text = "Email";
-            // 
+
             // txtParola
-            // 
             this.txtParola.Location = new System.Drawing.Point(77, 212);
             this.txtParola.Name = "txtParola";
             this.txtParola.Size = new System.Drawing.Size(294, 34);
-            this.txtParola.TabIndex = 5;
-            // 
+
             // lblParola
-            // 
             this.lblParola.AutoSize = true;
             this.lblParola.Location = new System.Drawing.Point(72, 171);
             this.lblParola.Name = "lblParola";
             this.lblParola.Size = new System.Drawing.Size(69, 27);
-            this.lblParola.TabIndex = 4;
             this.lblParola.Text = "Parola";
-            // 
+
             // txtReParola
-            // 
             this.txtReParola.Location = new System.Drawing.Point(459, 212);
             this.txtReParola.Name = "txtReParola";
             this.txtReParola.Size = new System.Drawing.Size(294, 34);
-            this.txtReParola.TabIndex = 7;
-            // 
+
             // lblReParola
-            // 
             this.lblReParola.AutoSize = true;
             this.lblReParola.Location = new System.Drawing.Point(454, 171);
             this.lblReParola.Name = "lblReParola";
             this.lblReParola.Size = new System.Drawing.Size(176, 27);
-            this.lblReParola.TabIndex = 6;
             this.lblReParola.Text = "Confirmare Parola";
-            // 
+
             // radioBibliotecar
-            // 
             this.radioBibliotecar.AutoSize = true;
             this.radioBibliotecar.Location = new System.Drawing.Point(77, 301);
             this.radioBibliotecar.Name = "radioBibliotecar";
             this.radioBibliotecar.Size = new System.Drawing.Size(126, 31);
-            this.radioBibliotecar.TabIndex = 8;
-            this.radioBibliotecar.TabStop = true;
             this.radioBibliotecar.Text = "Bibliotecar";
-            this.radioBibliotecar.UseVisualStyleBackColor = true;
-            // 
+            this.radioBibliotecar.Checked = true;
+
             // radioCititor
-            // 
             this.radioCititor.AutoSize = true;
             this.radioCititor.Location = new System.Drawing.Point(263, 301);
             this.radioCititor.Name = "radioCititor";
             this.radioCititor.Size = new System.Drawing.Size(85, 31);
-            this.radioCititor.TabIndex = 9;
-            this.radioCititor.TabStop = true;
             this.radioCititor.Text = "Cititor";
-            this.radioCititor.UseVisualStyleBackColor = true;
-            // 
+
             // btnInregistarare
-            // 
             this.btnInregistarare.Location = new System.Drawing.Point(103, 494);
             this.btnInregistarare.Name = "btnInregistarare";
             this.btnInregistarare.Size = new System.Drawing.Size(175, 68);
-            this.btnInregistarare.TabIndex = 10;
             this.btnInregistarare.Text = "Inregistrare";
             this.btnInregistarare.Click += new EventHandler(btnInregistarare_Click);
-            // 
+
             // btnRenuntare
-            // 
             this.btnRenuntare.Location = new System.Drawing.Point(425, 494);
             this.btnRenuntare.Name = "btnRenuntare";
             this.btnRenuntare.Size = new System.Drawing.Size(175, 68);
-            this.btnRenuntare.TabIndex = 11;
             this.btnRenuntare.Text = "Renuntare";
             this.btnRenuntare.Click += new EventHandler(btnRenuntare_Click);
 
+            // btnFiltreaza
+            this.btnFiltreaza.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 15F);
+            this.btnFiltreaza.Location = new System.Drawing.Point(218, 482);
+            this.btnFiltreaza.Name = "btnFiltreaza";
+            this.btnFiltreaza.Size = new System.Drawing.Size(167, 64);
+            this.btnFiltreaza.Text = "Filtreaza";
+            this.btnFiltreaza.Click += new EventHandler(btnFiltreaza_Click);
+
+            // txtNume
+            this.txtNume.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 15F);
+            this.txtNume.Location = new System.Drawing.Point(122, 404);
+            this.txtNume.Name = "txtNume";
+            this.txtNume.Size = new System.Drawing.Size(398, 40);
+
+            // lblNumelePrenume
+            this.lblNumelePrenume.AutoSize = true;
+            this.lblNumelePrenume.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 18F);
+            this.lblNumelePrenume.Location = new System.Drawing.Point(173, 353);
+            this.lblNumelePrenume.Name = "lblNumelePrenume";
+            this.lblNumelePrenume.Size = new System.Drawing.Size(306, 39);
+            this.lblNumelePrenume.Text = "Numele si prenumele";
+
+            // dataGridView
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cmbId,
+            this.cmbNume,
+            this.cmbEmail,
+            this.cmbAfisaza});
+            this.dataGridView.Location = new System.Drawing.Point(15, 25);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowHeadersWidth = 51;
+            this.dataGridView.RowTemplate.Height = 24;
+            this.dataGridView.Size = new System.Drawing.Size(865, 307);
+            this.dataGridView.CellContentClick += new DataGridViewCellEventHandler(dataGridView_CellContentClick);
+
+            // cmbId
+            this.cmbId.HeaderText = "Id";
+            this.cmbId.Name = "cmbId";
+            this.cmbId.ReadOnly = true;
+            this.cmbId.Width = 150;
+
+            // cmbNume
+            this.cmbNume.HeaderText = "NumePrenume";
+            this.cmbNume.Name = "cmbNume";
+            this.cmbNume.ReadOnly = true;
+            this.cmbNume.Width = 230;
+
+            // cmbEmail
+            this.cmbEmail.HeaderText = "Email";
+            this.cmbEmail.Name = "cmbEmail";
+            this.cmbEmail.ReadOnly = true;
+            this.cmbEmail.Width = 230;
+
+            // cmbAfisaza
+            this.cmbAfisaza.HeaderText = "Afiseaza";
+            this.cmbAfisaza.Name = "cmbAfisaza";
+            this.cmbAfisaza.ReadOnly = true;
+            this.cmbAfisaza.Width = 185;
+
+            cititorii = controllerUtilizatori.getCititorii();
+
+            for (int i = 0; i < cititorii.Count; i++)
+            {
+                dataGridView.Rows.Add(cititorii[i].Id, cititorii[i].Nume, cititorii[i].Email, "Afizare");
+            }
 
 
         }
@@ -273,7 +325,6 @@ namespace AplicatieBiblioteca.Panels
 
             this.form.removePnl("PnlBibliotecar");
             this.form.Controls.Add(new PnlBibliotecar(form,utilizator));
-
 
         }
 
@@ -336,6 +387,52 @@ namespace AplicatieBiblioteca.Panels
 
         }
 
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+                int id = int.Parse(row.Cells["cmbId"].Value.ToString());
+
+                Utilizator nou = controllerUtilizatori.findbyId(id);
+
+                tabControl1.SelectedIndex = 2;
+            }
+        }
+
+        private void btnFiltreaza_Click(object sender, EventArgs e)
+        {
+
+            if (txtNume.Text.Equals(""))
+            {
+                cititorii.Clear();
+                cititorii = controllerUtilizatori.getCititorii();
+                dataGridView.Rows.Clear();
+
+                for (int i = 0; i < cititorii.Count; i++)
+                {
+                    dataGridView.Rows.Add(cititorii[i].Id, cititorii[i].Nume, cititorii[i].Email, "Afizare");
+                }
+
+            }
+            else
+            {
+
+                cititorii.Clear();
+                cititorii = controllerUtilizatori.getCititoriiFiltrare(txtNume.Text);
+                dataGridView.Rows.Clear();
+
+                for (int i = 0; i < cititorii.Count; i++)
+                {
+                    dataGridView.Rows.Add(cititorii[i].Id, cititorii[i].Nume, cititorii[i].Email, "Afizare");
+                }
+
+            }
+
+            
+
+
+        }
 
     }
 }
